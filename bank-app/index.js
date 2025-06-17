@@ -65,7 +65,7 @@ app.post('/login', (req, res) => {
 app.get('/transfer', (req, res) => {
     const user = req.session.user;
     if (!user) {
-        return res.redirect('/login?error=2'); // or send a 401 response
+        return res.redirect('/login?error=2');
     }
     const balance = users[user]?.balance ?? 0;
     const alert = req.query.error
@@ -95,6 +95,17 @@ app.post('/transfer', (req, res) => {
     users[recipient].balance += amt;
 
     res.redirect('/transfer?success=1');
+});
+
+// Logout POST request
+app.post('/logout', (req, res) => {
+    req.session.destroy(err => {    // Remove the session from the server side.
+        if (err) {
+            return res.send('There was an error in logging out');
+        }
+        res.clearCookie('connect.sid'); // Remove the cookie on the client side
+        res.redirect('/login');
+    });
 });
 
 // Listen on Port 3000
