@@ -14,16 +14,19 @@
             margin: 0;
         }
 
-        
+        .container-wrapper {
+            display: flex;
+            gap: 2rem;
+        }
 
-        .transfer-container {
+        .transfer-container,
+        .coupon-container {
             background-color: #ffffff;
             padding: 2rem 2.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            max-width: 420px;
-            width: 100%;
-            position: relative; /* 👈 Needed for positioning the logout button inside */
+            width: 420px;
+            position: relative;
         }
 
         h2 {
@@ -105,27 +108,61 @@
         .logout-button:hover {
             background-color: #dc2626;
         }
+
+        .coupon {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .coupon span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .coupon form {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .coupon button {
+            width: auto;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+        }
     </style>
 </head>
 <body>
-    <div class="transfer-container">
-        <div class="top-bar">
-            <form action="/logout" method="POST">
-                <button class="logout-button" type="submit">Logout</button>
+    <div class="container-wrapper">
+        <!-- Transfer Box -->
+        <div class="transfer-container">
+            <div class="top-bar">
+                <form action="/logout" method="POST">
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </div>
+            <h2>Transfer Funds</h2>
+            {{alertBox}}
+
+            <form action="/transfer" method="POST">
+                <label for="recipient">Recipient Username</label>
+                <input type="text" id="recipient" name="recipient" placeholder="e.g. bob" required>
+
+                <label for="amount">Amount (₹)</label>
+                <input type="number" id="amount" name="amount" min="1" placeholder="e.g. 500" required>
+
+                <button type="submit">Send</button>
             </form>
         </div>
-        <h2>Transfer Funds</h2>
-        {{alertBox}}
 
-        <form action="/transfer" method="POST">
-            <label for="recipient">Recipient Username</label>
-            <input type="text" id="recipient" name="recipient" placeholder="e.g. bob" required>
-
-            <label for="amount">Amount (₹)</label>
-            <input type="number" id="amount" name="amount" min="1" placeholder="e.g. 500" required>
-
-            <button type="submit">Send</button>
-        </form>
+        <!-- Coupon Box -->
+        <div class="coupon-container">
+            <h2>Cashback Coupons</h2>
+            {{couponBox}}
+        </div>
     </div>
 </body>
 </html>

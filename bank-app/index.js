@@ -8,9 +8,12 @@ const PORT = 3000;
 
 // In-memory user "database"
 const users = {
-    alice: { password: 'alice', balance: 1000 },
-    bob: { password: 'bob', balance: 1000 },
-    attacker: { password: 'attacker', balance: 200 }
+    alice: { password: 'alice', balance: 1000, coupons: [
+        { id: 'Black-Friday-Coupon', percent: 5 },
+        { id: 'Summer-Sale-Coupon', percent: 10 }
+    ] },
+    bob: { password: 'bob', balance: 1000, coupons: [] },
+    attacker: { password: 'attacker', balance: 200, coupons: [] }
 };
 
 // Session settings
@@ -19,7 +22,7 @@ app.use(session({
     resave: false,                 // Don’t save unless session data is modified.
     saveUninitialized: false,      // Don’t create session until something is added to it.
     cookie: { 
-        httpOnly: true 
+        httpOnly: true             // Cannot be stolen by javascript.
     }
 }));
 
@@ -35,7 +38,12 @@ function renderTemplate(filePath, replacements = {}) {
     return template;
 }
 
-// Login page
+// Redirect home page to the login page
+app.get('/', (req, res) => {
+    res.redirect('/login');
+});
+
+// Show the login page
 app.get('/login', (req, res) => {
     const error_code = req.query.error;
     let error = '';
@@ -67,15 +75,33 @@ app.get('/transfer', (req, res) => {
     if (!user) {
         return res.redirect('/login?error=2');
     }
-    const balance = users[user]?.balance ?? 0;
-    const alert = req.query.error
-        ? '<div class="alert">Invalid recipient or insufficient funds.</div>'
-        : req.query.success
-        ? `<div class="alert success">Transfer completed successfully! Your remaining balance is ${balance}$</div>`
-        : '';
+    const userData = users[user] || {};
+    const balance = userData.balance ?? 0;
+    const coupons = userData.coupons || [];
+    let alert = '';
+    if (req.query.error) {
+        alert = '<div class="alert">Invalid recipient or insufficient funds.</div>';
+    } else if (req.query.success_deleted) {
+        alert = '<div class="alert success">Successfully deleted coupon.</div>';
+    } else if (req.query.success) {
+        alert = `<div class="alert success">Transfer completed successfully! Your remaining balance is ₹${balance}</div>`;
+    }
+
+    const couponBox = coupons.map(coupon => `
+        <div class="coupon">
+            <span>${coupon.id} - ${coupon.percent}% Cashback</span>
+            <div>
+                <form action="/coupon/delete" method="GET" style="display:inline;">
+                    <input type="hidden" name="couponId" value="${coupon.id}">
+                    <button type="submit" style="background-color:#f87171;">Delete</button>
+                </form>
+            </div>
+        </div>
+    `).join('');        
 
     const content = renderTemplate(path.join(__dirname, 'views', 'transfer.html'), {
-        alertBox: alert
+        alertBox: alert,
+        couponBox: couponBox
     });
 
     res.send(content);
@@ -84,6 +110,9 @@ app.get('/transfer', (req, res) => {
 // Transfer POST request
 app.post('/transfer', (req, res) => {
     const sender = req.session.user;
+    if (!sender) {
+        return res.redirect('/login?error=2');
+    }
     const { recipient, amount } = req.body;
     const amt = parseFloat(amount);
 
@@ -94,8 +123,26 @@ app.post('/transfer', (req, res) => {
     users[sender].balance -= amt;
     users[recipient].balance += amt;
 
+    console.log(`Transferred amount ${amount}$ from ${sender} to ${recipient}!!!`)
+
     res.redirect('/transfer?success=1');
 });
+
+// GET request to delete the coupon
+app.get('/coupon/delete', (req, res) => {
+    const username = req.session.user;
+    if (!username) {
+        return res.redirect('/login?error=2');
+    }
+    
+    const couponId = req.query.couponId;
+    const user = users[username];
+    
+    user.coupons = user.coupons.filter(coupon => coupon.id !== couponId); // Remove coupon by filtering it out
+
+    res.redirect('/transfer?success_deleted=1');
+});
+
 
 // Logout POST request
 app.post('/logout', (req, res) => {
