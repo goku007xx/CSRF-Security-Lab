@@ -75,15 +75,15 @@ app.get('/transfer', (req, res) => {
     if (!user) {
         return res.redirect('/login?error=2');
     }
-    const userData = users[user] || {};
+    const userData = users[user] || {}; 
     const balance = userData.balance ?? 0;
     const coupons = userData.coupons || [];
     let alert = '';
-    if (req.query.error) {
+    if (req.query.error) { // transfer?error=1
         alert = '<div class="alert">Invalid recipient or insufficient funds.</div>';
-    } else if (req.query.success_deleted) {
+    } else if (req.query.success_deleted) { // transfer?success_deleted=1
         alert = '<div class="alert success">Successfully deleted coupon.</div>';
-    } else if (req.query.success) {
+    } else if (req.query.success) { // transfer?success=1
         alert = `<div class="alert success">Transfer completed successfully! Your remaining balance is ₹${balance}</div>`;
     }
 
