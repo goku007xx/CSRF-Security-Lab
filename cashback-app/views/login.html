@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureSend – Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>SecureSend</h1>
+    <!-- Show error message if present -->
+    <div id="error" class="error" style="display:none;"></div>
+    <div id="success" class="success" style="display:none;"></div>
+    <form method="POST" action="/login">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" required autocomplete="username">
+
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password">
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  <script>
+    // Example: Show error if redirected with ?error=1
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error')) {
+      document.getElementById('error').textContent = 'Invalid username or password.';
+      document.getElementById('error').style.display = '';
+    }
+    if (params.get('logout')) {
+      document.getElementById('success').textContent = 'Successfully logged out.';
+      document.getElementById('success').style.display = '';
+    }
+    if (params.get('mustlogin')) {
+      document.getElementById('error').textContent = 'You must login first.';
+      document.getElementById('error').style.display = '';
+    }
+  </script>
+</body>
+</html> 
