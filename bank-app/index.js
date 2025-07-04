@@ -22,6 +22,11 @@ const users = {
     coupons: [
       { code: 'BOB10', discount: 0.1, label: '10% off' }
     ]
+  },
+  attacker: {
+    password: 'attacker',
+    balance: 0,
+    coupons: []
   }
 };
 

