@@ -1,0 +1,39 @@
+services:
+  attacker:
+    image: attacker-app-image
+    build:
+      context: ./attacker-app    # Path to the directory with Dockerfile for attacker app
+    container_name: attacker-app-container
+    expose:
+      - "4000"
+    networks:
+      - custom_network
+
+  bank:
+    image: bank-app-image
+    build:
+      context: ./bank-app        # Path to the directory with Dockerfile for bank app
+    container_name: bank-app-container
+    expose:
+      - "3000"
+    networks:
+      - custom_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx_reverse_proxy.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - attacker
+      - bank
+    networks:
+      - custom_network
+
+# We are using a custom network to allow the attacker and bank to communicate with each other using
+# service names. The default network does not allow communication using service names.
+networks:
+  custom_network:
+    driver: bridge

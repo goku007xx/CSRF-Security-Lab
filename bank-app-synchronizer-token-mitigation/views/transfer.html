@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureSend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Transfer Funds</h2>
+    <!-- Show success or error messages -->
+    <div id="message" class="success" style="display:none;"></div>
+    <form method="POST" action="/transfer">
+      <label for="to">Recipient Username</label>
+      <input id="to" name="to" type="text" required>
+
+      <label for="amount">Amount</label>
+      <input id="amount" name="amount" type="number" min="1" step="1" required>
+
+      <label for="coupon">Coupon Code <span class="optional">(optional)</span></label>
+      <input id="coupon" name="coupon" type="text" placeholder="Enter coupon code">
+
+      <button type="submit">Send</button>
+    </form>
+
+    <div class="coupons-section">
+      <h3>Your Cashback Coupons</h3>
+      <ul id="coupons-list"></ul>
+    </div>
+
+    <div style="margin-top:1.5rem; text-align:center;">
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+  <script>
+    // Show message if redirected with ?success=1 or ?error=1
+    const params = new URLSearchParams(window.location.search);
+    const msg = document.getElementById('message');
+    if (params.get('success')) {
+      msg.textContent = 'Your transfer was successful!';
+      msg.className = 'success';
+      msg.style.display = '';
+      if (params.get('coupon')) {
+        msg.textContent += ` Coupon "${params.get('coupon')}" applied!`;
+      }
+    } else if (params.get('deletedcoupon')) {
+      msg.textContent = `Coupon "${params.get('deletedcoupon')}" deleted.`;
+      msg.className = 'success';
+      msg.style.display = '';
+    } else if (params.get('error')) {
+      if (params.get('error') === 'invalidcoupon') {
+        msg.textContent = 'You have entered an Invalid coupon code.';
+      } else {
+        msg.textContent = 'Your transfer has failed.';
+      }
+      msg.className = 'error';
+      msg.style.display = '';
+    }
+
+    // Fetch and display coupons
+    fetch('/coupons')
+      .then(res => res.json())
+      .then(coupons => {
+        const list = document.getElementById('coupons-list');
+        if (!coupons.length) {
+          list.innerHTML = '<li class="no-coupons">No coupons available.</li>';
+          return;
+        }
+        list.innerHTML = '';
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+        coupons.forEach(coupon => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="coupon-code">${coupon.code}</span>
+            <span class="coupon-label">${coupon.label || ''}</span>
+            <a class="delete-coupon" href="/delete-coupon?code=${encodeURIComponent(coupon.code)}&csrfToken=${encodeURIComponent(csrfToken)}" title="Delete coupon">&times;</a>
+          `;
+          list.appendChild(li);
+        });
+      });
+
+
+
+  </script>
+</body>
+</html> 
