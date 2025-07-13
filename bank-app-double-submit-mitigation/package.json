@@ -1,0 +1,26 @@
+{
+  "name": "csrf-demo-playground",
+  "version": "1.0.0",
+  "description": "Sample Bank Application to demonstrate a CSRF attack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goku007xx/csrf-demo-playground.git"
+  },
+  "author": "Gokul Karthik",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/goku007xx/csrf-demo-playground/issues"
+  },
+  "homepage": "https://github.com/goku007xx/csrf-demo-playground#readme",
+  "dependencies": {
+    "body-parser": "2.2.0",
+    "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
+    "express": "5.1.0",
+    "express-session": "1.18.1"
+  }
+}

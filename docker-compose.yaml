@@ -2,18 +2,38 @@ services:
   attacker:
     image: attacker-app-image
     build:
-      context: ./attacker-app    # Path to the directory with Dockerfile for attacker app
+      context: ./attacker-app
     container_name: attacker-app-container
     expose:
       - "4000"
     networks:
       - custom_network
 
-  bank:
-    image: bank-app-image
+  insecure-bank:
+    image: insecure-bank-app-image
     build:
-      context: ./bank-app        # Path to the directory with Dockerfile for bank app
-    container_name: bank-app-container
+      context: ./bank-app-insecure   
+    container_name: insecure-bank-app-container
+    expose:
+      - "3000"
+    networks:
+      - custom_network
+
+  synchronizer-token-bank:
+    image: synchronizer-token-bank-app-image
+    build:
+      context: ./bank-app-synchronizer-token-mitigation 
+    container_name: synchronizer-token-bank-app-container
+    expose:
+      - "3000"
+    networks:
+      - custom_network
+
+  double-submit-bank:
+    image: double-submit-bank-app-image
+    build:
+      context: ./bank-app-double-submit-mitigation
+    container_name: double-submit-bank-app-container
     expose:
       - "3000"
     networks:
@@ -28,12 +48,14 @@ services:
       - ./nginx_reverse_proxy.conf:/etc/nginx/nginx.conf
     depends_on:
       - attacker
-      - bank
+      - insecure-bank
+      - synchronizer-token-bank
+      - double-submit-bank
     networks:
       - custom_network
 
 # We are using a custom network to allow the attacker and bank to communicate with each other using
-# service names. The default network does not allow communication using service names.
+# service names. The default bridge network does not allow communication using service names.
 networks:
   custom_network:
     driver: bridge
