@@ -164,4 +164,31 @@ a:hover {
 .no-coupons {
   color: #888;
   font-style: italic;
-} 
+}
+
+.balance-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+  border-radius: 8px;
+  padding: 14px 28px;
+  margin: 24px auto 32px auto;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(100, 150, 200, 0.08);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.balance-label {
+  font-size: 1.1em;
+  color: #2d3a4a;
+  font-weight: 500;
+  margin-right: 12px;
+}
+
+.balance-amount {
+  font-size: 1.5em;
+  color: #1a7f37;
+  font-weight: bold;
+  letter-spacing: 1px;
+}

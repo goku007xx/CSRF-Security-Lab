@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
@@ -79,7 +80,16 @@ app.post('/login', (req, res) => {
 
 // GET /transfer
 app.get('/transfer', requireLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'transfer.html'));
+    const username = req.session.username;
+    const balance = users[username].balance;
+
+    fs.readFile(path.join(__dirname, 'views', 'transfer.html'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error loading page');
+        }
+        const page = data.replace('{{balance}}', balance);
+        res.send(page);
+    });
 });
 
 // POST /transfer
