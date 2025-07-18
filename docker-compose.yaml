@@ -19,6 +19,16 @@ services:
     networks:
       - custom_network
 
+  samesite-bank:
+    image: samesite-bank-app-image
+    build:
+      context: ./bank-app-samesite-mitigation 
+    container_name: samesite-bank-app-container
+    expose:
+      - "3000"
+    networks:
+      - custom_network
+
   synchronizer-token-bank:
     image: synchronizer-token-bank-app-image
     build:

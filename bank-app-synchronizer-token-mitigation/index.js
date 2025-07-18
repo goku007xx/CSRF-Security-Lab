@@ -208,5 +208,5 @@ app.get('/delete-coupon', requireLogin, (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Bank app running at http://localhost:${PORT}`);
+    console.log(`Synchronizer Token Mitigation Bank app running at http://localhost:${PORT}`);
 });

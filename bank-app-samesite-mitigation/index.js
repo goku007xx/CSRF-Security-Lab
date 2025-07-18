@@ -38,7 +38,10 @@ app.use(
     secret: 'csrf-demo-secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true },
+    cookie: { 
+        httpOnly: true,
+        sameSite: 'lax'
+    },
   })
 );
 
@@ -172,5 +175,5 @@ app.get('/delete-coupon', requireLogin, (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`InsecureBank app running at http://localhost:${PORT}`);
+    console.log(`SameSite Mitigation Bank app running at http://localhost:${PORT}`);
 });

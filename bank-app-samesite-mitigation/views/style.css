@@ -1,0 +1,194 @@
+:root {
+  --primary: #2d6cdf;
+  --accent: #f5a623;
+  --bg: #f7f9fb;
+  --border: #e0e6ed;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(44, 62, 80, 0.07);
+}
+
+body {
+  background: var(--bg);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #222;
+}
+
+.container {
+  max-width: 400px;
+  margin: 60px auto;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem 2rem 2rem 2rem;
+}
+
+h1, h2 {
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  padding: 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+
+input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--accent);
+}
+
+.error {
+  color: #d32f2f;
+  background: #ffeaea;
+  border: 1px solid #f5c6cb;
+  border-radius: var(--radius);
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.success {
+  color: #388e3c;
+  background: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  border-radius: var(--radius);
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.97rem;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.coupons-section {
+  margin-top: 2rem;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+}
+
+.coupons-section h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 0.7rem;
+}
+
+#coupons-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#coupons-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4em 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+#coupons-list li:last-child {
+  border-bottom: none;
+}
+
+.coupon-code {
+  font-family: monospace;
+  font-weight: 600;
+  color: var(--accent);
+  margin-right: 0.7em;
+}
+
+.coupon-label {
+  color: #555;
+  font-size: 0.97em;
+  margin-right: auto;
+  margin-left: 0.5em;
+}
+
+.delete-coupon {
+  color: #d32f2f;
+  text-decoration: none;
+  font-size: 1.3em;
+  margin-left: 1em;
+  transition: color 0.2s;
+}
+
+.delete-coupon:hover {
+  color: #b71c1c;
+}
+
+.no-coupons {
+  color: #888;
+  font-style: italic;
+}
+
+.balance-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+  border-radius: 8px;
+  padding: 14px 28px;
+  margin: 24px auto 32px auto;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(100, 150, 200, 0.08);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.balance-label {
+  font-size: 1.1em;
+  color: #2d3a4a;
+  font-weight: 500;
+  margin-right: 12px;
+}
+
+.balance-amount {
+  font-size: 1.5em;
+  color: #1a7f37;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
