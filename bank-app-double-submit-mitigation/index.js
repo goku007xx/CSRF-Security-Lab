@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
 
 const app = express();
 const PORT = 3000;
-const CSRF_SECRET = 'your-very-secret-key';
 
 // In-memory user "database" with per-user coupons
 const users = {
@@ -127,7 +127,16 @@ app.post('/login', (req, res) => {
 
 // GET /transfer
 app.get('/transfer', requireLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'transfer.html'));
+    const username = req.session.username;
+    const balance = users[username].balance;
+
+    fs.readFile(path.join(__dirname, 'views', 'transfer.html'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error loading page');
+        }
+        const page = data.replace('{{balance}}', balance);
+        res.send(page);
+    });
 });
 
 // POST /transfer
@@ -139,11 +148,11 @@ app.post('/transfer', requireLogin, (req, res) => {
     const tokenFromForm = req.body.csrfToken;
 
     if (!cookie || !tokenFromForm) {
-        return res.status(403).send('Missing CSRF token');
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
     }
 
     if (cookie !== tokenFromForm) {
-        return res.status(403).send('CSRF validation failed');
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
     }
 
     let amt = parseInt(amount, 10);

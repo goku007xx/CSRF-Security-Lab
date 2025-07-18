@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSRF Validation Failed</title>
+    <style>
+        body {
+            background: #f8d7da;
+            color: #721c24;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .error-box {
+            background: #fff;
+            border: 2px solid #f5c6cb;
+            padding: 2em 3em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 0.5em;
+        }
+        a {
+            color: #721c24;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-box">
+        <h1>CSRF Attack Blocked!</h1>
+        <p>CSRF token validation failed for the transfer.</p>
+        <p><a href="/transfer">Return to Transfer Page</a></p>
+    </div>
+</body>
+</html>

