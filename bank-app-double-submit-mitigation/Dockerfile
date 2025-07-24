@@ -3,8 +3,8 @@ FROM node:22.15.1-alpine
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Copy package.json
+COPY package.json ./
 
 # Install dependencies
 RUN npm install --production
