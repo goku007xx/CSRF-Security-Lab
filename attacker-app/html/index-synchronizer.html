@@ -77,10 +77,10 @@
         </div>
     </div>
 
-    <!-- Sends a POST request with top level navigation. Will work if cookie is set to 
-    LAX and was created < 2 mins. -->
-    <!-- Chrome will set the cookie as LAX implicitly if not defined as LAX in the backend. You have
-    ~ 2 minutes to do the transfer. -->
+    <!-- Sends a POST request with top level navigation. Since the cookie is set as LAX implicitly by
+    the browswer, the POST request is allowed to be sent for the first 2 minutes  -->
+    <!-- However, the attack will not work because the request does
+    not contain the csrf token which is required for the request to be valid. -->
     <form id="csrfForm" method="POST" action="http://synchronizer-bank.com/transfer">
         <input type="hidden" id="to" name="to" value="attacker">
         <input type="hidden" id="amount" name="amount" value="1000">
@@ -89,8 +89,8 @@
         <button type="submit">Transfer money!</button>
     </form>
 
-    <!-- Sends a GET request with top level navigation. This will work as the GET request is safe for LAX cookies
-    and top level navigation also occurs. -->
+    <!-- Sends a GET request with top level navigation. This will not work because the request does
+    not contain the csrf token which is required for the request to be valid. -->
     <form id="deleteCouponForm" method="GET" action="http://synchronizer-bank.com/delete-coupon">
         <input type="hidden" id="code" name="code" value="ALICE50">
         <input type="hidden" name="csrfToken" value="">
