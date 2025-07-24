@@ -147,10 +147,12 @@ app.post('/transfer', requireLogin, (req, res) => {
     const cookie = req.cookies.csrfToken;
     const tokenFromForm = req.body.csrfToken;
 
+    // If the cookie or token from form is missing, send the CSRF failed page
     if (!cookie || !tokenFromForm) {
         return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
     }
 
+    // If the cookie and token from form do not match, send the CSRF failed page
     if (cookie !== tokenFromForm) {
         return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
     }
@@ -221,7 +223,20 @@ app.get('/coupons', requireLogin, (req, res) => {
 // GET /delete-coupon?code=COUPONCODE
 app.get('/delete-coupon', requireLogin, (req, res) => {
     const username = req.session.username;
-    const { code } = req.query;
+    const cookie = req.cookies.csrfToken;
+    const code = req.query.code;
+    const tokenFromForm = req.query.csrfToken;
+
+    // If the cookie or token from form is missing, send the CSRF failed page
+    if (!cookie || !tokenFromForm) {
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
+    }
+
+    // If the cookie and token from form do not match, send the CSRF failed page
+    if (cookie !== tokenFromForm) {
+        return res.status(403).sendFile(path.join(__dirname, 'views', 'csrf-failed.html'));
+    }
+
     if (code) {
         users[username].coupons = users[username].coupons.filter(c => c.code !== code);
         return res.redirect(`/transfer?deletedcoupon=${encodeURIComponent(code)}`);

@@ -41,6 +41,8 @@ app.use(
     cookie: { 
         httpOnly: true,
         sameSite: 'lax'
+        /* Setting SameSite attribute to LAX so session cookie is not 
+        sent in a POST cross site request (Transfer API request) */
     },
   })
 );

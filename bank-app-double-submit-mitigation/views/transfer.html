@@ -74,12 +74,13 @@
           return;
         }
         list.innerHTML = '';
+        const csrfToken = getCookie('csrfToken') || '';
         coupons.forEach(coupon => {
           const li = document.createElement('li');
           li.innerHTML = `
             <span class="coupon-code">${coupon.code}</span>
             <span class="coupon-label">${coupon.label || ''}</span>
-            <a class="delete-coupon" href="/delete-coupon?code=${encodeURIComponent(coupon.code)}" title="Delete coupon">&times;</a>
+            <a class="delete-coupon" href="/delete-coupon?code=${encodeURIComponent(coupon.code)}&csrfToken=${encodeURIComponent(csrfToken)}" title="Delete coupon">&times;</a>
           `;
           list.appendChild(li);
         });
@@ -90,7 +91,6 @@
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) {
-            console.log("Here");
             return parts.pop();
         }
     }
