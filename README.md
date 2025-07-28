@@ -4,7 +4,7 @@ A hands-on demo lab to explore **Cross-Site Request Forgery (CSRF)** attacks and
 
 ## Prerequisites
 
-**Docker** & **Docker Compose** must be installed on your machine(Linux or Windows).
+[Docker](https://docs.docker.com/engine/install) & [Docker Compose](https://docs.docker.com/compose/install) must be installed on your machine(Linux or Windows).
 
 ## Setting up the Lab
 
@@ -51,9 +51,11 @@ To simulate a logged-in user, use the following credentials to log in to any of 
 - **Username**: `alice`  
 - **Password**: `alice`
 
-## Learn More
+## Learn More / Help
 
-For a deep dive into how each mitigation works and the reasoning behind them, check out the blog: 
+For a deep dive into how each mitigation works and the reasoning behind them, check out the blogs: 
+
+If you have any questions, please post them as comments on any of the blog posts.
 
 ## License
 
