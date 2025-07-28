@@ -11,7 +11,7 @@
     "url": "git+https://github.com/goku007xx/CSRF-Security-Lab.git"
   },
   "author": "Gokul Karthik",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/goku007xx/CSRF-Security-Lab/issues"
   },
