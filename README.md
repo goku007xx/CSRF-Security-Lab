@@ -56,6 +56,7 @@ To simulate a logged-in user, use the following credentials to log in to any of 
 For a deep dive into how each mitigation works and the reasoning behind them, check out the blogs:  
 
 - [Understanding CSRF and How to Prevent It in Your Application — Part 1](https://medium.com/@gokul_karthik/understanding-csrf-and-how-to-prevent-it-in-your-application-part-1-9178bbc828d7)
+- [Understanding CSRF and How to Prevent It in Your Application — Part 2](https://medium.com/@gokul_karthik/understanding-csrf-and-how-to-prevent-it-in-your-application-part-2-4cfd2940e236)
 
 If you have any questions, please post them as comments on any of the blog posts.
 
